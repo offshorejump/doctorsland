@@ -6,8 +6,8 @@
     "type": "project",
     "require": {
         "php": ">=7.4.3",
-        "laravel/framework": "5.3.*",
-        "barryvdh/laravel-debugbar": "^2.2",
+        "laravel/framework": "5.7.0",
+        "barryvdh/laravel-debugbar": "^3.0.0",
         "zizaco/entrust": "^1.7",
         "yajra/laravel-datatables-oracle": "~6.0",
 		"laravelcollective/html": "^5.3.0"
@@ -44,12 +44,10 @@
             "php artisan key:generate"
         ],
         "post-install-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postInstall",
-            "php artisan optimize"
+            "Illuminate\\Foundation\\ComposerScripts::postInstall"
         ],
         "post-update-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan optimize"
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate"
         ]
     },
     "config": {

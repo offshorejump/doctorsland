@@ -1,0 +1,14 @@
+ $special1 = new Specialization();
+            $special1->title		= 'Bones';
+			$special1->created_by	= 1;
+       $special1->save();
+	   
+	   $special2 = new Specialization();
+            $special2->title		= 'ENT';
+			$special2->created_by	= 1;
+       $special2->save();
+	   
+	   $special3 = new Specialization();
+            $special3->title		= 'Heart';
+			$special3->created_by	= 1;
+       $special3->save();

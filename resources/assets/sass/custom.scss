@@ -1,0 +1,28 @@
+.content-wrapper.login {
+  margin-left: 0;
+}
+.select-text{
+  margin: 0px;
+  color: #DDDDDD;
+  position: absolute;
+  padding-top:20px
+}
+
+.task-duration{
+  margin: 10px 0px;
+  padding: 10px;
+  border: #eee solid 1px;
+  border-radius: 3px;
+  .text-left{
+    text-align: left !important;
+  }
+}
+
+.box-header.with-border{
+  border-bottom: 1px solid #f4f4f4 !important;
+}
+.notes-list{
+  .tab-content{
+          min-height: 140px;
+  }
+}

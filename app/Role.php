@@ -4,7 +4,7 @@ namespace App;
 use DB;
 
 use Illuminate\Database\Eloquent\Model;
-use Zizaco\Entrust\EntrustRole;
+use Savannabits\Entrust\EntrustRole;
 
 class Role extends EntrustRole
 {

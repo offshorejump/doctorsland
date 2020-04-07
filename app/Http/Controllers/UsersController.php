@@ -44,28 +44,27 @@ class UsersController extends Controller
 				
         // Making Single Controler for All Users
         $user_list = new User();
-
-			
+        $op_key = "";
+        $title = "";
 
         if( $user_type == "admins") {			//	If User Type is Admin
-            $userlist = User::where(['role_id' => 1]);
+            $user_list = User::where(['role_id' => 1]);
             $title  = 'Administrator';
             $op_key = 'admin';
         } elseif( $user_type == "doctors" ) {		//	If User Type is Staff
-            $userlist = User::where(['role_id' => 2]);
+            $user_list = User::where(['role_id' => 2]);
             $title  = 'Doctor';
             $op_key = 'doctor';
-
         }
 		
-        $userlist = $userlist->with(["Levels", "Roles"])->get();
+        $user_list = $user_list->with(["Levels", "Roles"])->get();
 		
 		$type = specialization::get();
 		
 		//dd( $userlist );
 		
         return view('users.index')->with([
-            'userlist' 	=> $userlist,
+            'userlist' 	=> $user_list,
             'op_key' 	=> $op_key,
             'title' 	=> $title,
 			'types'		=> $type,
@@ -102,10 +101,11 @@ class UsersController extends Controller
      *  Get User data by id
      **/
     public function get_user_byId(Request $request) 
-    {	
-        $user_result = User::where("id", $request->id)->get();
-        $returndata = '';
-		
+    {
+        $returndata = "<p>This is test</p>";
+
+        /*$user_result = User::where("id", $request->id)->get();
+
 		$partials = '';
 		$type = specialization::get();
 		$type_data = "";
@@ -150,7 +150,7 @@ class UsersController extends Controller
             <label>Phone</label>
             <input class="form-control" type="text" name="phone" id="phone" value="' . $user_result[0]->phone . '"/>
           </div>'.$partials.'
-	     </div>';
+	     </div>';*/
 
         return $returndata;
     }

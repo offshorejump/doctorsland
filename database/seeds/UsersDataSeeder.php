@@ -49,7 +49,7 @@ class UsersDataSeeder extends Seeder
             $adminUser1->name        = 'Admin User';
 			$adminUser1->company_name = "Admin LLC";
             $adminUser1->address     = '96 Bowman Street, Glasgow, England';
-            $adminUser1->email       = 'admin@softsourcepk.com';
+            $adminUser1->email       = 'super@softsourcepk.com';
             $adminUser1->password    = bcrypt('123456');
 			$adminUser1->phone    	 = '555 111 1111';
             $adminUser1->role_id     = '1';

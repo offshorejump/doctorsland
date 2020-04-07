@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <base href="http://newtest.byethost7.com/public/" />
+    <base href="http://localhost:8000/" />
     <title>@yield('title')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="stylesheet" href="assets/css/static.css">

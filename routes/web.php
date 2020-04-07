@@ -39,12 +39,12 @@ Route::group(['middleware' => ['auth']], function() {
  **/
 Route::get('accounts/{type}', 'UsersController@index');
 Route::post('accounts/new/{type}', 'UsersController@new_user');
-Route::resource('accounts/get-user', 'UsersController@get_user_byId');
-Route::resource('update-user', 'UsersController@update_user');
+Route::post('accounts/get-user', 'UsersController@get_user_byId');
+Route::post('update-user', 'UsersController@update_user');
 Route::resource('account/remove', 'UsersController@delete');
 
 
-Route::resource('accounts/{type}/new', 'UsersController@new_account_form');
+Route::get('accounts/{type}/new', 'UsersController@new_account_form');
 Route::post('accounts/{type}/add_new', 'UsersController@new_account_post');
 /**
  *  Patient routes

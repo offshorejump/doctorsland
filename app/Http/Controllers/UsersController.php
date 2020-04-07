@@ -102,9 +102,8 @@ class UsersController extends Controller
      **/
     public function get_user_byId(Request $request) 
     {
-        $returndata = "<p>This is test</p>";
-
-        /*$user_result = User::where("id", $request->id)->get();
+        $returndata = "";
+        $user_result = User::where("id", $request->id)->get();
 
 		$partials = '';
 		$type = specialization::get();
@@ -123,9 +122,7 @@ class UsersController extends Controller
 				'.$type_data.'
 				</select>
 			  </div>';
-		}	
-		
-		
+		}
 
         $returndata .= '<div class="box-body">
           <input type="hidden" name="id" id="id" value="' . $user_result[0]->id . '"/>
@@ -150,7 +147,7 @@ class UsersController extends Controller
             <label>Phone</label>
             <input class="form-control" type="text" name="phone" id="phone" value="' . $user_result[0]->phone . '"/>
           </div>'.$partials.'
-	     </div>';*/
+	     </div>';
 
         return $returndata;
     }

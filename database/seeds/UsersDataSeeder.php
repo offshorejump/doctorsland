@@ -105,7 +105,7 @@ class UsersDataSeeder extends Seeder
 		
 		$faker = Faker::create();
         //	Seeder Dummy Doctors
-        foreach (range(1,8) as $index) {
+        foreach (range(1,9) as $index) {
             $first_name = $faker->firstname;
             $last_name  = $faker->lastname;
             $name = $first_name. " " . $last_name;

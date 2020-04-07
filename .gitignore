@@ -8,6 +8,7 @@ app/storage/
 ---database---/
 _feedbacks/
 _backups/
+storage/
 
 # Laravel 5 & Lumen specific
 bootstrap/cache/

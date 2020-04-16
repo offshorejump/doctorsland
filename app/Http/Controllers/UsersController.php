@@ -35,13 +35,13 @@ class UsersController extends Controller
      */
     public function index($user_type)
     {
-		// Permission Check
+		    // Permission Check
         if( Auth::user()->role_id != 1 ){
             $errors = ["You are not authorized to see this page."];
             return view("errors.notauthorized")->with("errors", $errors);
         }
-		
-				
+
+
         // Making Single Controler for All Users
         $user_list = new User();
         $op_key = "";
@@ -56,18 +56,18 @@ class UsersController extends Controller
             $title  = 'Doctor';
             $op_key = 'doctor';
         }
-		
+
         $user_list = $user_list->with(["Levels", "Roles"])->get();
-		
+
 		$type = specialization::get();
-		
+
 		//dd( $userlist );
-		
+
         return view('users.index')->with([
             'userlist' 	=> $user_list,
             'op_key' 	=> $op_key,
             'title' 	=> $title,
-			'types'		=> $type,
+			      'types'		=> $type,
         ]);
     }
 
@@ -100,7 +100,7 @@ class UsersController extends Controller
     /**
      *  Get User data by id
      **/
-    public function get_user_byId(Request $request) 
+    public function get_user_byId(Request $request)
     {
         $returndata = "";
         $user_result = User::where("id", $request->id)->get();
@@ -108,13 +108,13 @@ class UsersController extends Controller
 		$partials = '';
 		$type = specialization::get();
 		$type_data = "";
-		
-		
+
+
 		foreach( $type as $type )
 		{
 			$type_data .= "<option value='".$type->id."' ".(($user_result[0]->type == $type->id)?"selected":"").">".$type->title."</option>";
 		}
-				
+
 		if( $user_result[0]->role_id > 1 ) {
 			$partials = '<div class="form-group">
 				<label>Type of Doctor</label>
@@ -158,7 +158,7 @@ class UsersController extends Controller
      * Update Admin/Staff by Id
      *
      **/
-    public function update_user(Request $request) 
+    public function update_user(Request $request)
     {
         $role_id = isset( $request->roles )? $request->roles : 1;
 
@@ -177,20 +177,20 @@ class UsersController extends Controller
             $user->name         = $request->first_name . " " . $request->last_name;
 			$user->address		= $request->address;
 			$user->phone		= $request->phone;
-		
+
         if( isset( $request->email) && !empty( $request->email )  ) {
             $user->email = $request->email;
         }
-		
+
 		if( isset( $request->type) && !empty( $request->type )  ) {
             $user->type = $request->type;
         }
-		
+
 		if( Auth::check() && Auth::user()->role_id > 2 ) {
 			$user->qualification  = $request->qualification;
 			$user->type = $request->type;
 		}
-		
+
 
             $user->role_id  = $role_id;
 
@@ -277,7 +277,7 @@ class UsersController extends Controller
 
 
         $user->update($data);
-        $request->session()->flash('Success', 'Your password has successfully changed.');	
+        $request->session()->flash('Success', 'Your password has successfully changed.');
 
         return redirect('settings/profile');
     }
@@ -299,19 +299,19 @@ class UsersController extends Controller
         flash()->success('Success!', 'User successfully deleted.');
         return redirect('/admin/users');
     }
-	
-	
-	
-	
+
+
+
+
 	/**
     *	Fetch Patient by ID
     */
     public function doctor_by_id(Request $request)
-    {		
+    {
         $doctor = User::find($request->id);
-		
+
 		if( isset( $doctor )  &&  count( $doctor ) > 0 ) {
-			
+
 			if( empty( $doctor->avatar ) ) {
 				$avatar_image = "no-image.png";
 			} else {
@@ -331,11 +331,11 @@ class UsersController extends Controller
 			$returndata = '<div class="box-body">
 				<table class="table table-bordered table-striped">
 					<tr><td>No Doctor Found: '.$request->id.'</td></tr>
-					
+
 				</table>
 			</div>';
 		}
-		
+
         return $returndata;
     }
 
@@ -348,22 +348,22 @@ class UsersController extends Controller
     {
         return User::destroy($request->user_id);
     }
-	
+
 	/**
 	*	New Account Page
-	**/	
+	**/
 
 	public function new_account_form($type = "doctor"){
 		 //$profile_data = User::all()->where("id", Auth::user()->id);
 		$type = specialization::get();
-		
+
         return view("users.newdoctor")->with([
 						//'profiles' 	=> $profile_data,
 						'types'		=> $type
 					]);
 	}
-	
-	
+
+
 	/***
 	*
 	*
@@ -372,7 +372,7 @@ class UsersController extends Controller
      * Update Admin/Staff by Id
      *
      **/
-    public function new_account_post(Request $request) 
+    public function new_account_post(Request $request)
     {
 		//dd($request);
 
@@ -413,21 +413,21 @@ class UsersController extends Controller
 				$user->phone		= $request->phone;
 				$user->company_name = $request->company_name;
 				$user->password		= bcrypt($request->password);
-				
+
 			if( isset( $request->email) && !empty( $request->email )  ) {
 				$user->email = $request->email;
 			}
-			
+
 			$user->qualifications  = $request->qualification;
 			//if( isset( $request->specialization) && !empty( $request->specialization )  ) {
 				$user->type = $request->specialization;
 			//}
-			
+
 			//dd($request->specialization);
 			$user->role_id  = $role_id;
 	//dd($user);
 			$result = $user->save();
-	
+
 			if( $result == 1 || empty( $result )) {
 				return redirect()->back()->with("Success", "New Doctor Created Successfully.")->withInput();
 			} elseif( $result == 0 ) {
@@ -449,9 +449,9 @@ class UsersController extends Controller
 					//"requesting" => $request
 					]);
 		}
-		
-		
-		
+
+
+
     }
-	
+
 }

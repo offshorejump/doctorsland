@@ -1,10 +1,8 @@
 @extends('layouts.layout')
 @section('title', 'Patients List')
-@section('breadcrumbs', '
-<li class="active">Patients</li>
-')
+@section('breadcrumbs', "<li class='active'>Patients</li>")
 
-@section('content') 
+@section('content')
 
 <!-- Patients list -->
 
@@ -13,7 +11,7 @@
     <h3 class="box-title">Patients List</h3>
   </div>
   <!-- Patient-header -->
-  
+
   <div class="box-body">
     @if( Auth::check() && Auth::user()->role_id > 1 )
     <a class="btn btn-primary" style="float:right" href="{{url('patient/new')}}">Add New</a>
@@ -26,15 +24,15 @@
           <th>Email</th>
           <th>Phone Number</th>
           <!--<th>Address</th>-->
-		  @if( Auth::check() && Auth::user()->role_id <= 1 )
-          <!--<th>Doctor</th>-->
+		  @if( Auth::check() && Auth::user()->role_id <= 0 )
+          <th>Doctor</th>
           @endif
-		  <th>Action</th>	
-          @if( Auth::check() && Auth::user()->role_id > 1 )<th>Actions</th>@endif
+
+          @if( Auth::check() && Auth::user()->role_id > 0 )<th>Actions</th>@endif
         </tr>
       </thead>
       <tbody>
-      
+
       @if( !empty( $patientlist ) && count( $patientlist ) > 0 )
       @foreach($patientlist as $patient)
       <tr>
@@ -42,24 +40,26 @@
         <td>{{$patient->last_name}}</td>
         <td>@if( !empty( $patient->email ) ) <i class="fa fa-envelope-o" aria-hidden="true"></i> {{$patient->email}} @endif</td>
         <td>@if( !empty( $patient->phone ) ) <a data-original-title="Call" href="tel:{{$patient->phone}}"> <i class="fa fa-envelope-o" aria-hidden="true"></i> {{$patient->phone}}</a> @endif</td>
-        <td>
+      <!--  <td>
         	<button class="btn btn-success btn-sm" type="submit" name="" value=""> <i class="fa fa-eye"></i> </button>
-        	<button class="btn btn-primary btn-sm" type="submit" name="" value=""><i class="fa fa-edit " aria-hidden="true"></i></button>
+        	<button class="btn btn-primary btn-sm edit_patient_btn" type="submit" name="" value=""><i class="fa fa-edit " aria-hidden="true"></i></button>
             <button class="btn btn-info btn-sm" type="submit" name="" value=""><i class="fa fa-archive " aria-hidden="true"></i></button>
-        </td>
+        </td>-->
         <!--<td>
-        	
+
          </td>-->
         <!--<td>{{$patient->address}}</td>-->
         @if( Auth::check() && Auth::user()->role_id <= 1 )
         <!--<td> {{$patient->Doctor->name}} </td>-->
         @endif
-        @if( Auth::check() && Auth::user()->role_id > 1 )
-        
-        <td  style="width:10%;"><input type="hidden" name="_token" value="{{ csrf_token() }}">
+        @if( Auth::check() && Auth::user()->role_id > 0 )
+
+        <td  style="width:15%;"><input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <button class="btn btn-success btn-sm view_Patient_button" type="submit" name="" value="{{$patient->id}}"> <i class="fa fa-eye"></i> </button>
+
           <button class="btn btn-primary btn-sm edit_patient_btn" type="submit" name="id"
                                         value="{{$patient->id}}"><i class="fa fa-edit " aria-hidden="true"></i></button>
-          
+
           <button class="btn btn-danger btn-sm delete_patient_btn" type="submit" name="dell_id" value="{{$patient->id}}"> <i class="fa  fa-trash"></i> </button>
            </td>
         @endif
@@ -67,7 +67,7 @@
       @endforeach
       @endif
         </tbody>
-      
+
     </table>
   </div>
 </div>
@@ -102,7 +102,7 @@
     </div>
     {{ Form::close() }} </div>
 </div>
-<!--  New Staff Modal end--> 
+<!--  New Staff Modal end-->
 
 <!-- Edit Patient Modal Start -->
 <div id="editpatient" class="modal fade" role="dialog"> {{ Form::open(array('url' => '/patient/update-patient', 'id'=>'update_patient')) }}
@@ -145,19 +145,19 @@
 </div>
 @stop
 
-@section('script') 
-<!-- jQuery 2.2.3 --> 
+@section('script')
+<!-- jQuery 2.2.3 -->
 <script type="text/javascript">
         $(document).ready(function () {
 
-             $('#patientdatatable').DataTable({
+            /* $('#patientdatatable').DataTable({
                 "paging": true,
                 "lengthChange": false,
                 "searching": false,
                 "ordering": true,
                 "info": true,
                 "autoWidth": false
-            });
+            });*/
 
 
             /**
@@ -237,6 +237,35 @@
             }
 
 
+
+            /**
+            *	Fetch Patient Data and VIEW
+            */
+            $(".view_Patient_button").click( function () {
+                var dataString = {
+					        'id': $(this).attr("value"),
+					        '_token': $('input[name="_token"]').val(),
+					        'is_view':"1",
+				        };
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ url('patient/view')}}",
+                    data: dataString,
+                    success: function (data) {
+                      alert("Kill india");
+					              $(".alert").fadeOut(1);
+                        $('#viewPatientdata').html(data);
+                        $('#viewPatient').modal("show");
+                    }
+                });
+
+				         return false;
+
+            });
+
+
+
             /**
             *	Trigger when update is pressed.
             */
@@ -260,7 +289,7 @@
                     $(".alert-danger span").text( response );
                     $(".alert-danger").fadeIn(400);
                 }
-                    
+
 
                 if (response == 'Please fill all the required feilds') {
                     $(".alert-danger span").text( response );
@@ -299,7 +328,7 @@
              */
             $('#delete_patient').on('click',function () {
                 var patient_id = $('#person_id').val();
-				
+
                 $.ajax({
                     type: 'POST',
                     url: "{{url('/patient/delete')}}",
@@ -324,5 +353,5 @@
 
         });
 
-    </script> 
+    </script>
 @stop

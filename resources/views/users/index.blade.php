@@ -4,7 +4,7 @@
 <li class="active">'.$op_key.'</li>
 ')
 
-@section('content') 
+@section('content')
 
 <!-- Users list -->
 
@@ -13,7 +13,7 @@
     <h3 class="box-title">{{$title}} Accounts</h3>
   </div>
   <!-- User-header -->
-  
+
   <div class="box-body">
     <button type="button" class="btn btn-primary" style="float:right" data-toggle="modal" data-target="#addnew{{$op_key}}">Add New</button>
     <table id="{{$op_key}}datatable" class="table table-bordered table-striped">
@@ -21,7 +21,7 @@
         <tr>
           <th>Company Logo</th>
           <th>Company Name</th>
-          <th>Dr. First Name</th>	
+          <th>Dr. First Name</th>
           <th>Dr. Last Name</th>
           @if( Auth::check() && Auth::user()->role_id > 1 )
           <th>Dr. Type</th>
@@ -36,7 +36,7 @@
         </tr>
       </thead>
       <tbody>
-      
+
       @if( !empty( $userlist ) && count( $userlist ) > 0 )
       @foreach($userlist as $user)
       <tr>
@@ -56,10 +56,10 @@
         <!--<td> @if( !empty( $user->email ) ) <i class="fa fa-envelope-o" aria-hidden="true"></i>  {{$user->email}}  @endif
         	<br />
         	@if( !empty( $user->phone ) ) <a data-original-title="Send Email" href="tel:{{$user->phone}}"> <i class="fa fa-phone" aria-hidden="true"></i> {{$user->phone}} </a> @endif
-            
+
            </td>
         <td>{{$user->address}}</td>-->
-        <td  style="width:10%;">
+        <td  style="width:15%;">
         	<button class="btn btn-success btn-sm view_{{$op_key}}_btn" type="submit" name="view_id" value="{{$user->id}}"> <i class="fa fa-eye"></i> </button>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <button class="btn btn-primary btn-sm edit_{{$op_key}}_btn" type="submit" name="id"
@@ -71,7 +71,7 @@
       @endforeach
       @endif
         </tbody>
-      
+
     </table>
   </div>
 </div>
@@ -97,25 +97,25 @@
             {{Form::Email('email','', array('class' => 'form-control', 'placeholder'=>'Enter Email Address', 'required'=>'required'))}} <i id="email_message" style="color:red"></i></div>
           <div class="form-group"> {{Form::label('password', 'Password')}}
             {{Form::password('password', array('class' => 'form-control', 'placeholder'=>'Enter password', 'required'=>'required'))}} </div>
-            
+
             <div class="form-group">
               <label>Patient</label>
               <select class="form-control" name="specialization" id="specialization" data-placeholder="-- Select Doctor Type --">
                 <option disabled selected value> -- Select Doctor Type -- </option>
-                
-					@foreach($types as $type)         
+
+					@foreach($types as $type)
 						<option value="{{$type->id}}">{{$type->title}}</option>
 					@endforeach
-                                    
+
               </select>
             </div>
-            
-            
+
+
           @if( $op_key != "admin" )
-          <div class="form-group"> 
+          <div class="form-group">
             {{Form::hidden('roles', '2')}} </div>
           @endif
-          
+
            </div>
       </div>
       <div class="modal-footer">
@@ -125,7 +125,7 @@
     </div>
     {{ Form::close() }} </div>
 </div>
-<!--  New Staff Modal end--> 
+<!--  New Staff Modal end-->
 
 <!-- Edit User Modal Start -->
 <div id="edit{{$op_key}}" class="modal fade" role="dialog"> {{ Form::open(array('url' => '/update-user', 'id'=>'update_'.$op_key)) }}
@@ -168,8 +168,8 @@
 </div>
 @stop
 
-@section('script') 
-<!-- jQuery 2.2.3 --> 
+@section('script')
+<!-- jQuery 2.2.3 -->
 <script type="text/javascript">
         $(document).ready(function () {
 
@@ -283,7 +283,7 @@
                     $(".alert-danger span").text( response );
                     $(".alert-danger").fadeIn(400);
                 }
-                    
+
 
                 if (response == 'Please fill all the required feilds') {
                     $(".alert-danger span").text( response );
@@ -349,5 +349,5 @@
 
         });
 
-    </script> 
+    </script>
 @stop

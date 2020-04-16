@@ -4,7 +4,7 @@
 <li class="active">Types of Doctor</li>
 ')
 
-@section('content') 
+@section('content')
 
 <!-- Users list -->
 
@@ -13,7 +13,7 @@
     <h3 class="box-title">Types of Doctor</h3>
   </div>
   <!-- User-header -->
-  
+
   <div class="box-body">
     <button type="button" class="btn btn-primary" style="float:right" data-toggle="modal" data-target="#addnew">Add New</button>
     <table id="datatable" class="table table-bordered table-striped">
@@ -25,13 +25,13 @@
         </tr>
       </thead>
       <tbody>
-      
+
       @if( !empty( $types ) && count( $types ) > 0 )
       @foreach($types as $type)
       <tr>
         <td>{{$type->id}}</td>
         <td>{{$type->title}}</td>
-        
+
         <td  style="width:10%;"><input type="hidden" name="_token" value="{{ csrf_token() }}">
           <button class="btn btn-primary btn-sm edit_btn" type="submit" name="id" value="{{$type->id}}"><i class="fa fa-edit " aria-hidden="true"></i></button>
            </td>
@@ -39,7 +39,7 @@
       @endforeach
       @endif
         </tbody>
-      
+
     </table>
   </div>
 </div>
@@ -68,7 +68,7 @@
     </div>
     {{ Form::close() }} </div>
 </div>
-<!--  New Staff Modal end--> 
+<!--  New Staff Modal end-->
 
 <!-- Edit User Modal Start -->
 <div id="edit" class="modal fade" role="dialog"> {{ Form::open(array('url' => 'types/update-type', 'id'=>'update')) }}
@@ -111,8 +111,8 @@
 </div>
 @stop
 
-@section('script') 
-<!-- jQuery 2.2.3 --> 
+@section('script')
+<!-- jQuery 2.2.3 -->
 <script type="text/javascript">
         $(document).ready(function () {
 
@@ -221,7 +221,7 @@
              *	jQuery: Callback function for Staff Update
              */
             function onUpdateSuccessCallback(response, status) {
-                
+
                 if (response == 'Success') {
                     $(".alert-success span").html( "Type Details Updated Successfully." );
                     $(".alert-success").fadeIn(400);
@@ -238,5 +238,5 @@
 
         });
 
-    </script> 
+    </script>
 @stop

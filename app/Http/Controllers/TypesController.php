@@ -19,47 +19,47 @@ class TypesController extends Controller
         parent::__construct();
 
     }
-	
-	 /**
+
+
+   /**
      * Controller Method: List all Types
      **/
     public function index()
     {
-		$types = Specialization::all();
-		
-				
-		return view('types.index')->with([
-            'types' 	=> $types,
+        $types = Specialization::all();
+
+        return view('types.index')->with([
+          'types' 	=> $types,
         ]);
-	}
-	
-	
-	public function new_type(Request $request) 
+    }
+
+
+	public function new_type(Request $request)
 	{
 		$type = new Specialization();
-		
+
 		$type->title = $request->title;
-		$result = $type->save();	
-		
+		$result = $type->save();
+
 		if( $result == 1 || $result == "1" ) {
-			return "Success";	
+			return "Success";
 		} else {
-			return $result;	
+			return $result;
 		}
-		
-		
-			
+
+
+
 	}
-	
-	
-	
+
+
+
 	/**
 	*
 	**/
-	public function get_type(Request $request) 
+	public function get_type(Request $request)
 	{
 		$type_result = Specialization::where("id", $request->id)->get();
-		
+
         $returndata = '<div class="box-body">
           <input type="hidden" name="id" id="id" value="' . $type_result[0]->id . '"/>
           <div class="form-group">
@@ -68,17 +68,17 @@ class TypesController extends Controller
           </div>
 	     </div>';
 
-        return $returndata;	
+        return $returndata;
 	}
-	
-	
+
+
 	/**
 	*	Update Type
 	**/
 	public function update_type(Request $request)
 	{
 		//$request->id = 4;
-		
+
 		$type = Specialization::find( $request->id );
             $type->title   = $request->title;
         $result = $type->save();
@@ -91,8 +91,8 @@ class TypesController extends Controller
             return "Error";
         }
 	}
-	
-	
+
+
 	/**
 	*
 	**/
@@ -108,7 +108,7 @@ class TypesController extends Controller
 			$type->title = $request->title;
 			$type->created_by = Auth::user()->id;
 		$status = $type->save();
-		
+
 		if( $status == 1 || empty( $status )) {
 				return redirect()->back()->with("Success", "New Type Created Successfully.")->withInput();
 			} elseif( $status == 0 ) {

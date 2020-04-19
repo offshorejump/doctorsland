@@ -10,11 +10,12 @@ class PagesController extends Controller
      * Create a new controller instance.
      *
      * @return void
-     */
+    */
     public function __construct()
     {
         parent::__construct();
     }
+
 
     /**
      * Home page
@@ -23,7 +24,6 @@ class PagesController extends Controller
      */
     public function home()
     {
-		
         return view('pages.home');
     }
 

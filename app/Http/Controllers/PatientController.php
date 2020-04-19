@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Yajra\Datatables\Facades\Datatables;
 
-use Illuminate\Support\Facades\Input;
+//use Illuminate\Support\Facades\Input;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PatientController extends Controller
@@ -27,7 +27,7 @@ class PatientController extends Controller
         parent::__construct();
 
     }
-	
+
 	 /**
      * Controller Method: List all Patients
      **/
@@ -38,13 +38,13 @@ class PatientController extends Controller
 		} else {
 			$patientlist = Patient::where("created_by", Auth::user()->id)->get();
 		}
-				
+
 		return view('patients.index')->with([
             'patientlist' 	=> $patientlist,
         ]);
 	}
-	
-	
+
+
 	/**
 	*	Controller Method: Get Patient By ID
 	**/
@@ -56,7 +56,7 @@ class PatientController extends Controller
         if( $patient_result[0]->role_id > 2 ) {
             $returndata .= '<input type="hidden" id="roles" name="roles" value="'.$patient_result[0]->role_id.'">';
         }
-		
+
 		/*echo "<pre>";
 			print_r( $patient_result );
 		echo "</pre>";*/
@@ -96,19 +96,19 @@ class PatientController extends Controller
             <label>Insurance Number</label>
             <input class="form-control" type="text" name="insurance_number" id="insurance_number" value="' . $patient_result[0]->insurance_number . '" required="required"/>
           </div>
-          
+
         </div>';
 
         return $returndata;
 	}
-	
-	
+
+
 	/**
 	*	Controller MEthod: Update Patient Information
 	**/
 	public function update(Request $request)
 	{
-		
+
         if( isset( $request->id ))
         {
             $patient_id = $request->id;
@@ -118,8 +118,8 @@ class PatientController extends Controller
             $patient_id = 0;
         }
 
-		
-		
+
+
         $patient = Patient::find( $patient_id );
             $patient->first_name   	= $request->first_name;
             $patient->last_name    	= $request->last_name;
@@ -129,7 +129,7 @@ class PatientController extends Controller
 			$patient->insurance_name	= $request->insurance_name;
 			$patient->insurance_type	= $request->insurance_type;
 			$patient->insurance_number	= $request->insurance_number;
-			
+
         if( isset( $request->email) && !empty( $request->email )  )
         {
             $patient->email = $request->email;
@@ -143,10 +143,10 @@ class PatientController extends Controller
             return "Nothing to Update";
         } else {
             return "Error";
-        }	
+        }
 	}
-	
-	
+
+
 	/**
     *	Add new Patient Page
     */
@@ -154,14 +154,14 @@ class PatientController extends Controller
     {
         return view("patients.new");
     }
-	
-	
+
+
 	/**
 	*	New Patient
 	**/
 	public function add_patient(Request $request)
 	{
-		
+
 		$input = [
             "first_name" 	=> $request->first_name,
 			"last_name" 	=> $request->last_name,
@@ -193,64 +193,62 @@ class PatientController extends Controller
         $validate = Validator::make($input,$rules, $messages);
 
         if($validate->passes())
-        {		
-			$avatar_fileName 	= "";
-			
-			if (Input::hasFile('avatar'))
-			{
-				if (Input::file('avatar')->isValid()) {
-					$destinationPath = 'assets/images'; // upload path
-					$extension = Input::file('logo')->getClientOriginalExtension(); // getting image extension
-					$avatar_fileName = "logo_".date("YmdHis").rand(111,999).'.'.$extension; // renameing image
-					Input::file('avatar')->move($destinationPath, $avatar_fileName); // uploading file to given path
-				  
-				} else {
-					return "Avatar Could be Uploaded.";
-				}
-			}
-			
-			
+        {
+          $avatar_fileName 	= "";
+
+    			if ($request->hasFile('avatar'))
+    			{
+    				if ($request->file('avatar')->isValid()) {
+    					$destinationPath = 'assets/images'; // upload path
+    					$extension = $request->file('logo')->getClientOriginalExtension(); // getting image extension
+    					$avatar_fileName = "logo_".date("YmdHis").rand(111,999).'.'.$extension; // renameing image
+    					$request->file('avatar')->move($destinationPath, $avatar_fileName); // uploading file to given path
+    				} else {
+    					return "Avatar Could be Uploaded.";
+    				}
+    			}
+
            $patient = new Patient;
 
             $patient->first_name	= $request->first_name;
             $patient->last_name		= $request->last_name;
-			$patient->name       	= $request->first_name." ".$request->last_name;
+      			$patient->name       	= $request->first_name." ".$request->last_name;
             $patient->address 		= $request->address;
             $patient->phone 		= $request->phone;
             $patient->email 		= $request->email;
-			$patient->insurance_name	= $request->insurance_name;
-			$patient->insurance_type	= $request->insurance_type;
-			$patient->insurance_number 	= $request->insurance_number;
+      			$patient->insurance_name	= $request->insurance_name;
+      			$patient->insurance_type	= $request->insurance_type;
+      			$patient->insurance_number 	= $request->insurance_number;
             $patient->avatar 		= $avatar_fileName;
-			$patient->created_by 	= Auth::user()->id;
+			      $patient->created_by 	= Auth::user()->id;
 
             $result = $patient->save();
 
-            if( $result == 1 ) 
-			{	
-				return "Success";
+            if( $result == 1 )
+      			{
+      				return "Success";
             } else {
-                return "An Error Occured";
-            }
-		} else {
-            $messages = $validate->messages();
-            $messages = json_decode( $messages );
-            $message_html = "";
+                      return "An Error Occured";
+                  }
+      		 } else {
+                  $messages = $validate->messages();
+                  $messages = json_decode( $messages );
+                  $message_html = "";
 
-            foreach($messages as $index => $value) {
-                $message_html .=  "<p>".$value[0]."</p>";
-            }
+                  foreach($messages as $index => $value) {
+                      $message_html .=  "<p>".$value[0]."</p>";
+                  }
 
 
-			return $message_html;
+      			return $message_html;
             //return $message_html;
-        }	
+        }
 	}
 
-	
-	
 
-	
+
+
+
 	/**
     *   Delete Patient
     **/

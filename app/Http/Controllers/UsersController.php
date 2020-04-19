@@ -128,6 +128,10 @@ class UsersController extends Controller
           <input type="hidden" name="id" id="id" value="' . $user_result[0]->id . '"/>
 		  <input type="hidden" name="roles" id="roles" value="' . $user_result[0]->role_id . '"/>
           <div class="form-group">
+            <label>Hospital / Clinic Name</label>
+            <input class="form-control" type="text" name="company_name" id="company_name" disabled="disabled" value="' . $user_result[0]->company_name . '"/>
+          </div>
+          <div class="form-group">
             <label>First Name</label>
             <input class="form-control" type="text" name="first_name" id="first_name" value="' . $user_result[0]->first_name . '"/>
           </div>

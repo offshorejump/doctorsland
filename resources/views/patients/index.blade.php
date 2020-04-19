@@ -24,7 +24,7 @@
           <th>Email</th>
           <th>Phone Number</th>
           <!--<th>Address</th>-->
-		  @if( Auth::check() && Auth::user()->role_id <= 0 )
+		  @if( Auth::check() && Auth::user()->role_id <= 1 )
           <th>Doctor</th>
           @endif
 
@@ -50,7 +50,7 @@
          </td>-->
         <!--<td>{{$patient->address}}</td>-->
         @if( Auth::check() && Auth::user()->role_id <= 1 )
-        <!--<td> {{$patient->Doctor->name}} </td>-->
+        <td> {{$patient->Doctor->name}} </td>
         @endif
         @if( Auth::check() && Auth::user()->role_id > 0 )
 
@@ -102,7 +102,7 @@
     </div>
     {{ Form::close() }} </div>
 </div>
-<!--  New Staff Modal end-->
+<!--  New Patient Modal end-->
 
 <!-- Edit Patient Modal Start -->
 <div id="editpatient" class="modal fade" role="dialog"> {{ Form::open(array('url' => '/patient/update-patient', 'id'=>'update_patient')) }}
@@ -122,8 +122,28 @@
     </div>
     {{ Form::close() }} </div>
 </div>
-<!--  New Staff Modal end-->
 
+<!-- Edit Patient Modal Start -->
+<div id="viewPatient" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+        <h4 class="modal-title">Patient Information</h4>
+      </div>
+      <div class="alert alert-danger" style="display:none"><strong>Alert!</strong> <span></span></div>
+      <div class="alert alert-success" style="display:none"><strong>Success!</strong> <span></span></div>
+      <div class="modal-body" id="viewPatientdata"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+    </div>
+</div>
+
+
+<!--  New Patient Modal end-->
 <div id="dell_client" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -149,16 +169,6 @@
 <!-- jQuery 2.2.3 -->
 <script type="text/javascript">
         $(document).ready(function () {
-
-            /* $('#patientdatatable').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false
-            });*/
-
 
             /**
             *	Fetch Data and Put into Edit Model
@@ -214,7 +224,7 @@
 
 
             /**
-             *	jQuery: Call back function for New Staff
+             *	jQuery: Call back function for New Patient
              *
             function onsuccess(response, status) {
                 if (response == 'Email already registered')
@@ -237,7 +247,6 @@
             }
 
 
-
             /**
             *	Fetch Patient Data and VIEW
             */
@@ -253,7 +262,7 @@
                     url: "{{ url('patient/view')}}",
                     data: dataString,
                     success: function (data) {
-                      alert("Kill india");
+                      // alert("Kill india");
 					              $(".alert").fadeOut(1);
                         $('#viewPatientdata').html(data);
                         $('#viewPatient').modal("show");
@@ -281,7 +290,7 @@
 
 
             /**
-             *	jQuery: Callback function for Staff Update
+             *	jQuery: Callback function for Patient Update
              */
             function onUpdateSuccessCallback(response, status) {
                 if (response == 'Email already registered')

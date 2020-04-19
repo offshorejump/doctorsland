@@ -51,7 +51,7 @@
         </div>
         <div class="col-md-6 col-sm-6 col-xs-12"></div>
     </div> <br />
-    
+
     <div class="row">
     	<div class="col-md-6 col-sm-6 col-xs-12">
         	<div class="row">
@@ -81,7 +81,7 @@
                               <td>{{$refer->ReferedTo->first_name}} {{$refer->ReferedTo->last_name}}</td>
                             </tr>
                         @endforeach
-                       
+
                       </tbody>
                     </table>
                     </div>
@@ -99,11 +99,17 @@
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
                       <table class="table table-hover">
-                        <tbody><tr>
+                        <tbody>
+													<tr>
                           <th>Sr No.</th>
                           <th>First Name</th>
                           <th>Last Name</th>
                         </tr>
+												<tr>
+														<td>1.</td>
+														<td>Dummy First name</td>
+														<td>Dummy Last Name</td>
+												</tr>
                       </tbody>
                     </table>
                     </div>
@@ -111,10 +117,10 @@
                 </div>
               </div>
         </div>
-    </div>    
+    </div>
      <div class="row">
      	<div class="col-md-6 col-sm-6 col-xs-12">
-        	
+
             <div class="box box-primary">
             <div class="box-header with-border">
               <i class="fa fa-bar-chart-o"></i>
@@ -132,9 +138,9 @@
             </div>
             <!-- /.box-body-->
           </div>
-            
-            
-            
+
+
+
         </div>
         <div class="col-md-6 col-sm-6 col-xs-12">
         	<div class="box">
@@ -143,7 +149,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">
-              
+
             </div>
           </div>
         </div>
@@ -176,7 +182,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                <!--<button type="submit" class="btn btn-primary">Save</button>--> 
+                <!--<button type="submit" class="btn btn-primary">Save</button>-->
             </div>
         </div>
         {{ Form::close() }} </div>
@@ -185,7 +191,7 @@
 @section('script')
 <script>
 $(document).ready(function(){
-    
+
 
   $(function () {
     /*
@@ -449,6 +455,6 @@ $(document).ready(function(){
       + '<br>'
       + Math.round(series.percent) + '%</div>'
   }
- }); 
+ });
 </script>
 @stop

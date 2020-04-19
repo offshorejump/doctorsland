@@ -77,19 +77,18 @@ class TypesController extends Controller
 	**/
 	public function update_type(Request $request)
 	{
-		//$request->id = 4;
+      //$request->id = 4;
+      $type = Specialization::find( $request->id );
+      $type->title   = $request->title;
+      $result = $type->save();
 
-		$type = Specialization::find( $request->id );
-            $type->title   = $request->title;
-        $result = $type->save();
-
-        if( $result == 1 || empty( $result )) {
-            return "Success";
-        } elseif( $result == 0 ) {
-            return "Nothing to Update";
-        } else {
-            return "Error";
-        }
+      if( $result == 1 || empty( $result )) {
+          return "Success";
+      } elseif( $result == 0 ) {
+          return "Nothing to Update";
+      } else {
+          return "Error";
+      }
 	}
 
 

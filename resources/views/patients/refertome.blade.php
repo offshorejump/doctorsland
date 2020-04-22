@@ -4,7 +4,7 @@
 <li class="active">Patients Refered To Me</li>
 ')
 
-@section('content') 
+@section('content')
 
 <!-- Patients list -->
 
@@ -13,9 +13,9 @@
     <h3 class="box-title">Patients Refered To Me</h3>
   </div>
   <!-- Patient-header -->
-  
+
   <div class="box-body">
-    
+
     <table id="patientdatatable" class="table table-bordered table-striped">
       <thead>
         <tr>
@@ -26,29 +26,29 @@
           <th>Date Referred</th>
           <th>Appointment Date set by Referral</th>
           <th>By Which Doctor</th>
-          <th>Action</th>
+          <th width="9%">Action</th>
           <!--<th>Address</th>-->
-          <!--<th>Refered By</th>
-          @if( Auth::check() && Auth::user()->role_id > 1 )<th>Actions</th>@endif-->
+
+          <!--@if( Auth::check() && Auth::user()->role_id > 1 )<th>Actions</th>@endif-->
         </tr>
       </thead>
       <tbody>
-      
+
       @if( !empty( $patients ) && count( $patients ) > 0 )
       @foreach($patients as $patient)
-      
+
       @if( $patient->is_viewed == 0 )
       	<tr style="font-weight:bold;">
       @else
       	<tr>
       @endif
-      
-      
+
+
         <td>{{$patient->patients->first_name}}</td>
         <td>{{$patient->patients->last_name}}</td>
-        <td> @if( !empty( $patient->patients->email ) )  <i class="fa fa-envelope-o" aria-hidden="true">  {{$patient->patients->email}}</i>  @endif</td>
+        <td> @if( !empty( $patient->patients->email ) )  <i class="fa fa-envelope-o" aria-hidden="true"><a href="mailto:{{$patient->patients->email}}">  {{$patient->patients->email}}</a></i>  @endif</td>
         <td>
-        	@if( $patient->patients->phone ) 
+        	@if( $patient->patients->phone )
         <a data-original-title="Call" href="tel:{{$patient->patients->phone}}"> <i class="fa fa-phone" aria-hidden="true"></i> {{$patient->patients->phone}}</a>
         @endif
         </td>
@@ -59,8 +59,8 @@
         <!--@if( Auth::check() && Auth::user()->role_id > 1 )
         <td  style="width:10%;"><input type="hidden" name="_token" value="{{ csrf_token() }}">
           <a href="patient/show/{{$patient->id}}" class="btn btn-success btn-sm view_patient_button_disabled" data-id="{{$patient->id}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
-          
-          
+
+
            </td>
         @endif-->
         <td>
@@ -71,7 +71,7 @@
       @endforeach
       @endif
         </tbody>
-      
+
     </table>
   </div>
 </div>
@@ -89,7 +89,7 @@
             <div class="modal-body" id="viewPatientsdata"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                <!--<button type="submit" class="btn btn-primary">Save</button>--> 
+                <!--<button type="submit" class="btn btn-primary">Save</button>-->
             </div>
         </div>
         {{ Form::close() }} </div>
@@ -99,31 +99,31 @@
 
 @stop
 
-@section('script') 
-<!-- jQuery 2.2.3 --> 
+@section('script')
+<!-- jQuery 2.2.3 -->
 <script type="text/javascript">
 	$(document).ready(function () {
-		 $('#patientdatatable').DataTable({
+		/* $('#patientdatatable').DataTable({
 			"paging": true,
 			"lengthChange": false,
 			"searching": false,
 			"ordering": true,
 			"info": true,
 			"autoWidth": false
-		});
-		
-		
+		});*/
+
+
 		/**
             *	Fetch Patients Data and VIEW
             */
             $(".view_patient_button").click( function () {
                 var dataString = {
-					'id': $(this).attr("data-id"), 
+					'id': $(this).attr("data-id"),
 					'_token': $('input[name="_token"]').val(),
 					'is_view':"1",
 				};
-				
-				
+
+
                 $.ajax({
                     type: "POST",
                     url: "{{ url('patient/view')}}",
@@ -134,13 +134,13 @@
                         $('#viewPatients').modal("show");
                     }
                 });
-				
-				
+
+
 				return false;
-				
+
             });
-		
+
 	});
 
-</script> 
+</script>
 @stop

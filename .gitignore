@@ -9,6 +9,7 @@ app/storage/
 _feedbacks/
 _backups/
 storage/
+resources/views/_backup_before_asher/
 
 
 # Laravel 5 & Lumen specific

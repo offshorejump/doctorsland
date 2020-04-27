@@ -141,12 +141,14 @@ class PatientController extends Controller
         } else {
             return "Error";
         }
-	}
+    }
 
 
     /**
-    *	Add new Patient Page
-    */
+    *	Add new Patient Page View
+    *
+    * Return: View {addnewpatient}
+    **/
     public function new_Patient(Request $request)
     {
         return view("patients.new");

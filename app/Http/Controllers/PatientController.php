@@ -144,7 +144,7 @@ class PatientController extends Controller
 	}
 
 
-	/**
+    /**
     *	Add new Patient Page
     */
     public function new_Patient(Request $request)
@@ -153,101 +153,97 @@ class PatientController extends Controller
     }
 
 
-	/**
-	*	New Patient
-	**/
-	public function add_patient(Request $request)
-	{
+    /**
+     * New Patient
+    **/
+    public function add_patient(Request $request)
+    {
 
-		$input = [
-            "first_name" 	=> $request->first_name,
-			"last_name" 	=> $request->last_name,
-            "email"			=> $request->email,
-			"insurance_name"		=> $request->insurance_name,
-			"insurance_type"		=> $request->insurance_type,
-			"insurance_number"		=> $request->insurance_number,
+        $input = [
+           "first_name"        =>  $request->first_name,
+			     "last_name"         =>  $request->last_name,
+           "email"             =>  $request->email,
+           "insurance_name"    =>  $request->insurance_name,
+           "insurance_type"    =>  $request->insurance_type,
+           "insurance_number"  =>  $request->insurance_number,
         ];
 
 
         $rules = [
-            'first_name' 	=> 'required|min:3',
-			'last_name' 	=> 'required|min:3',
-            'email'			=> 'unique:patients,email',
-			'insurance_name'		=> 'required|min:5',
-			'insurance_type'		=> 'required|min:5',
-			'insurance_number'		=> 'required|min:3',
+           'first_name'       =>  'required|min:3',
+           'last_name' 	      =>  'required|min:3',
+           'email'            =>  'unique:patients,email',
+           'insurance_name'   =>  'required|min:5',
+           'insurance_type'   =>  'required|min:5',
+           'insurance_number' =>  'required|min:3',
         ];
 
+
         $messages =  [
-            'first_name.required' 	=> 'Enter First Name.',
-            'last_name.required' 	=> 'Enter Last Name',
-            'email.required' 		=> 'Correct Email.',
-			'insurance_name.required' 	=> 'Enter Insurance Name',
-			'insurance_type.required' 	=> 'Enter Insurance Type',
-			'insurance_number.required' 	=> 'Enter Insurance Number',
+           'first_name.required'       =>  'Enter First Name.',
+           'last_name.required'        =>  'Enter Last Name',
+           'email.required'            =>  'Correct Email.',
+           'insurance_name.required'   =>  'Enter Insurance Name',
+           'insurance_type.required'   =>  'Enter Insurance Type',
+           'insurance_number.required' =>  'Enter Insurance Number',
         ];
 
         $validate = Validator::make($input,$rules, $messages);
 
         if($validate->passes())
         {
-          $avatar_fileName 	= "";
+            $avatar_fileName = "";
 
-    			if ($request->hasFile('avatar'))
-    			{
-    				if ($request->file('avatar')->isValid()) {
-    					$destinationPath = 'assets/images'; // upload path
-    					$extension = $request->file('logo')->getClientOriginalExtension(); // getting image extension
-    					$avatar_fileName = "logo_".date("YmdHis").rand(111,999).'.'.$extension; // renameing image
-    					$request->file('avatar')->move($destinationPath, $avatar_fileName); // uploading file to given path
-    				} else {
-    					return "Avatar Could be Uploaded.";
-    				}
-    			}
+            if ($request->hasFile('avatar'))
+            {
+                if ($request->file('avatar')->isValid()) {
+                    $destinationPath = 'assets/images'; // upload path
+                    $extension = $request->file('logo')->getClientOriginalExtension(); // getting image extension
+                    $avatar_fileName = "logo_".date("YmdHis").rand(111,999).'.'.$extension; // renameing image
+                    $request->file('avatar')->move($destinationPath, $avatar_fileName); // uploading file to given path
+                } else {
+                    return "Avatar Could be Uploaded.";
+                }
+            }
 
-           $patient = new Patient;
-
-            $patient->first_name	= $request->first_name;
-            $patient->last_name		= $request->last_name;
-      			$patient->name       	= $request->first_name." ".$request->last_name;
-            $patient->address 		= $request->address;
-            $patient->phone 		= $request->phone;
-            $patient->email 		= $request->email;
-      			$patient->insurance_name	= $request->insurance_name;
-      			$patient->insurance_type	= $request->insurance_type;
-      			$patient->insurance_number 	= $request->insurance_number;
-            $patient->avatar 		= $avatar_fileName;
-			      $patient->created_by 	= Auth::user()->id;
-
+            // Creating OBject to Add new Patient
+            $patient = new Patient;
+               $patient->first_name       =  $request->first_name;
+               $patient->last_name        =  $request->last_name;
+               $patient->name             =  $request->first_name." ".$request->last_name;
+               $patient->address          =  $request->address;
+               $patient->phone            =  $request->phone;
+               $patient->email            =  $request->email;
+               $patient->insurance_name   =  $request->insurance_name;
+               $patient->insurance_type   =  $request->insurance_type;
+               $patient->insurance_number =  $request->insurance_number;
+               $patient->avatar           =  $avatar_fileName;
+               $patient->created_by       = Auth::user()->id;
             $result = $patient->save();
 
             if( $result == 1 )
-      			{
-      				return "Success";
+            {
+                return "Success";
             } else {
-                      return "An Error Occured";
-                  }
-      		 } else {
-                  $messages = $validate->messages();
-                  $messages = json_decode( $messages );
-                  $message_html = "";
+                return "An Error Occured";
+            }
+        } else {
+            $messages = $validate->messages();
+            $messages = json_decode( $messages );
+            $message_html = "";
 
-                  foreach($messages as $index => $value) {
-                      $message_html .=  "<p>".$value[0]."</p>";
-                  }
+            foreach($messages as $index => $value) {
+                $message_html .= "<p>".$value[0]."</p>";
+            }
 
-
-      			return $message_html;
+            return $message_html;
             //return $message_html;
         }
-	}
+    }
 
 
-
-
-
-	/**
-    *   Delete Patient
+    /**
+     *   Delete Patient
     **/
     public function delete( Request $request )
     {

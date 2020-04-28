@@ -45,7 +45,8 @@ Route::post('update-user', 'UsersController@update_user');
 Route::resource('account/remove', 'UsersController@delete');
 Route::get('accounts/{type}/new', 'UsersController@new_account_form');
 Route::post('accounts/{type}/add_new', 'UsersController@new_account_post');
-
+Route::get('doctor/new', 'NewDoctorController@index');
+Route::post('doctor/add', 'NewDoctorController@add_new_doctor');
 
 /**
  *  Patient routes
@@ -62,7 +63,7 @@ Route::resource('patient/refered', 'ReferController@referedtodoctor');
 Route::get('patient/referedtome', 'ReferController@referedtome');
 Route::post('patient/view', 'ReferController@view_by_id');
 Route::get('patient/show/{id}', 'ReferController@show_by_id');
-Route::resource('doctor/view', 'UsersController@doctor_by_id');
+Route::get('doctor/view', 'UsersController@doctor_by_id');
 
 
 /**

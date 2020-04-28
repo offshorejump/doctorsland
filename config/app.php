@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'Patients Management Portal',
 
     /*
     |--------------------------------------------------------------------------
@@ -232,7 +232,7 @@ return [
         'Entrust'   => Savannabits\Entrust\EntrustFacade::class,
 		'Form' => Collective\Html\FormFacade::class,
 		'Html' => Collective\Html\HtmlFacade::class,
-		'Countries' => Webpatser\Countries\CountriesFacade::class,		
+		'Countries' => Webpatser\Countries\CountriesFacade::class,
 
     ],
 

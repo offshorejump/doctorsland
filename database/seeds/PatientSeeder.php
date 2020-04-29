@@ -14,7 +14,7 @@ class PatientSeeder extends Seeder
      */
     public function run()
     {
-       $faker = Faker::create();
+        $faker = Faker::create();
         //	Seeder Users
         foreach (range(1,15) as $index) {
             $first_name = $faker->firstname;
@@ -25,13 +25,13 @@ class PatientSeeder extends Seeder
                 'first_name' => $first_name,
                 'last_name'  => $last_name,
                 'name'       => $name,
-				'dob'        => Carbon::now(),
+				        'dob'        => Carbon::now(),
                 'email'      => $faker->email,
                 'address'    => $faker->address,
                 'phone'      => $faker->phoneNumber,
-				'insurance_name'	=> $name,
-				'insurance_type'	=> $faker->sentence(1),
-				'insurance_number'	=> rand(12020, 99999),
+				        /*'insurance_name'	=> $name,
+				        'insurance_type'	=> $faker->sentence(1),
+				        'insurance_number'	=> rand(12020, 99999),*/
                 'created_by' => rand(3,4),
                 'created_at' => Carbon::now(),
             ]);

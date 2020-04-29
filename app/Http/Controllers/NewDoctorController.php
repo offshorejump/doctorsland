@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\specialization;
 use Validator;
-
+use App\User;
 
 //  CODE ON THIS PAGE IS IN BAD STRUCTURE. NEED TO WORK that
-//  add_new_doctor METHOND HAS BUGS. NEED TO RESOLVE ASAP  
+//  add_new_doctor METHOND HAS BUGS. NEED TO RESOLVE ASAP
 
 
 class NewDoctorController extends Controller
@@ -41,7 +41,12 @@ class NewDoctorController extends Controller
     **/
     public function add_new_doctor(Request $request)
     {
-		//dd($request);
+		    //dd($request);
+
+        /*echo "<pre>";
+          print_r( $request );
+        echo "</pre>";
+        exit;*/
 
         $input = [
            "first_name" =>  $request->first_name,
@@ -74,17 +79,17 @@ class NewDoctorController extends Controller
             $role_id = 2;
 
             $user = new User();
-               $user->first_name = $request->first_name;
-               $user->last_name  = $request->last_name;
-               $user->name       = $request->first_name . " " . $request->last_name;
-    				$user->address		= $request->address;
-    				$user->phone		= $request->phone;
-    				$user->company_name = $request->company_name;
-    				$user->password		= bcrypt($request->password);
+               $user->first_name    =  $request->first_name;
+               $user->last_name     =  $request->last_name;
+               $user->name          =  $request->first_name . " " . $request->last_name;
+               $user->address       =  $request->address;
+               $user->phone         =  $request->phone;
+               $user->company_name  =  $request->company_name;
+               $user->password      =  bcrypt($request->password);
 
-			if( isset( $request->email) && !empty( $request->email )  ) {
-				$user->email = $request->email;
-			}
+               if( isset( $request->email) && !empty( $request->email )  ) {
+                   $user->email = $request->email;
+               }
 
 			$user->qualifications  = $request->qualification;
 			//if( isset( $request->specialization) && !empty( $request->specialization )  ) {
@@ -112,11 +117,11 @@ class NewDoctorController extends Controller
                 $message_html .=  $value[0]."";
             }
 
-			return redirect()->back()->with([
-					"Error" => $message_html,
-					//"requesting" => $request
-					]);
-		}
+            return redirect()->back()->with([
+                "Error" => $message_html,
+                "requesting" => $request
+            ]);
+        }
 
 
 

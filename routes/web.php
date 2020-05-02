@@ -45,7 +45,8 @@ Route::post('update-user', 'UsersController@update_user');
 Route::resource('account/remove', 'UsersController@delete');
 Route::get('accounts/{type}/new', 'UsersController@new_account_form');
 Route::post('accounts/{type}/add_new', 'UsersController@new_account_post');
-
+Route::get('doctor/new', 'NewDoctorController@index');
+Route::post('doctor/add', 'NewDoctorController@add_new_doctor');
 
 /**
  *  Patient routes
@@ -62,7 +63,7 @@ Route::resource('patient/refered', 'ReferController@referedtodoctor');
 Route::get('patient/referedtome', 'ReferController@referedtome');
 Route::post('patient/view', 'ReferController@view_by_id');
 Route::get('patient/show/{id}', 'ReferController@show_by_id');
-Route::resource('doctor/view', 'UsersController@doctor_by_id');
+Route::get('doctor/view', 'UsersController@doctor_by_id');
 
 
 /**
@@ -70,17 +71,18 @@ Route::resource('doctor/view', 'UsersController@doctor_by_id');
  **/
 Route::get('types/list', 'TypesController@index');
 Route::post('types/new', 'TypesController@new_type');
-Route::resource('types/new_type', 'TypesController@new_type_form');
-Route::resource('types/add_new', 'TypesController@save_new_type');
+Route::get('types/new_type', 'TypesController@new_type_form');
+Route::post('types/add_new', 'TypesController@save_new_type');
 Route::post('types/get-type', 'TypesController@get_type');
 Route::post('types/update-type', 'TypesController@update_type');
+
 
 /**
  *  Settings routes
  **/
 Route::get('settings/profile', 'ProfileSettingController@get_profile');
 Route::post('settings/profile/update', 'ProfileSettingController@update_profile');
-Route::resource('settings/profile/changepassword/', 'UsersController@update_password');
+Route::post('settings/profile/changepassword/', 'UsersController@update_password');
 
 
 

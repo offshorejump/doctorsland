@@ -353,27 +353,25 @@ class UsersController extends Controller
         return User::destroy($request->user_id);
     }
 
-	/**
-	*	New Account Page
-	**/
 
-	public function new_account_form($type = "doctor"){
-		 //$profile_data = User::all()->where("id", Auth::user()->id);
-		$type = specialization::get();
+    /**
+     * New Account Page
+    **/
+    public function new_account_form($type = "doctor")
+    {
+        //$profile_data = User::all()->where("id", Auth::user()->id);
+        $type = specialization::get();
 
         return view("users.newdoctor")->with([
 						//'profiles' 	=> $profile_data,
-						'types'		=> $type
-					]);
-	}
+           'types' => $type
+        ]);
+    }
 
 
-	/***
-	*
-	*
-	***/
+
 	/**
-     * Update Admin/Staff by Id
+     *
      *
      **/
     public function new_account_post(Request $request)

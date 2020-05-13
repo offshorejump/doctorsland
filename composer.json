@@ -9,12 +9,13 @@
         "laravel/framework": "7.4.0",
         "barryvdh/laravel-debugbar": "^3.0.0",
         "yajra/laravel-datatables-oracle": "~9.0",
-		"laravelcollective/html": "^6.0.0",
+		    "laravelcollective/html": "^6.0.0",
         "laravel/ui": "^2.0",
         "facade/ignition": "^2.0",
         "maatwebsite/excel": "^3.1",
         "illuminate/cache": "7.4.0",
-        "savannabits/entrust": "^6.1"
+        "savannabits/entrust": "^6.1",
+        "phpoffice/phpspreadsheet":"^1.9"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
